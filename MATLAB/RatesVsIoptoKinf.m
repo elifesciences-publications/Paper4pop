@@ -98,14 +98,5 @@ for i=nbpop:-1:1
         end
     end
 
-    if(IF_SAVE & i==1)
-        figdir = FigDir(model,nbpop,dir,N,K,g,IF_RING,Crec,Cff,IF_DATA) ; 
-        fprintf('Writing %s \n',figdir) 
-        try
-            mkdir(figdir) ; 
-        end
-        ProcessFigure(fig, fullfile(figdir,figtitle)) ; 
-    end
-
 end
 

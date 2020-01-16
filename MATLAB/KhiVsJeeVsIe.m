@@ -14,15 +14,8 @@ for l=1:length(v_Ia)
 
     for i=1:length(v_Jab) 
         
-        % BL = ImportData(model, nbpop, dir, 'IdvRates', N, K, g, IF_RING, Crec, Cff, 'Jab_Loop', prtrPop, [Iext(prtrPop) v_Jab(i)] ) ;
-        
-        % file = sprintf('Jee%.4f/Mean',v_Jab(i)) ; 
-        %BL = ImportData(model, nbpop, dir, file, N, K, g, IF_RING, Crec, Cff, '', prtrPop, [] ) ; 
-
         try 
-            BL = ImportData(model, nbpop, dir, 'Mean', N, K, g, IF_RING, ...
-                            Crec, Cff, 'JabLoop', prtrPop, [Iext(prtrPop) ...
-                                v_Ia(l) v_Jab(i)] ) ;
+            BL = ImportData(model, nbpop, dir, 'Mean', N, K, g, 'JabLoop', prtrPop, [Iext(prtrPop) v_Ia(l) v_Jab(i)] ) ;
             BL(1,:) = [] ; 
         catch
             BL = NaN(1,nbpop+1)
@@ -43,9 +36,7 @@ for l=1:length(v_Ia)
         fprintf('\n') 
 
         try
-            Prtr = ImportData(model, nbpop, dir, 'Mean', N, K, g, IF_RING, ...
-                              Crec, Cff, 'JabLoop', prtrPop, [Iext(prtrPop)+prtrAmp ...
-                                v_Ia(l) v_Jab(i)] ) ;
+            Prtr = ImportData(model, nbpop, dir, 'Mean', N, K, g,'JabLoop', prtrPop, [Iext(prtrPop)+prtrAmp v_Ia(l) v_Jab(i)] ) ;
             Prtr(1,:) = [] ;
         catch
             Prtr = NaN(1,nbpop+1)
@@ -71,28 +62,15 @@ for l=1:length(v_Ia)
         NormKhi(l,i) = khi(l,2,i) ./ khi(l,1,i) ; 
         mE(l,i) = mBL(l,1,i) ; 
         mI(l,i) = mBL(l,2,i) ; 
-        % mS(l,i) = mBL(l,3,i) ; 
-        % mV(l,i) = mBL(l,4,i) ; 
 
     end
 end
 
-% figtitle = sprintf('L5_KhiVsJab') ; 
-% fig = figure('Name',figtitle,'NumberTitle','off') ; hold on ; 
-% xlabel('J_{EE}')
-% ylabel('Norm. \chi ')
-% plot(v_Jab, zeros(1,length(v_Jab)), '--','Color','k')
-
-% for i=1:nbpop
-%     Y = khi(1,i,:) ./ mBL(1,i,:) ; 
-%     plot(v_Jab, squeeze(Y), 'd','Color',cl{i},'markersize',1)     
-% end
 
 figtitle = sprintf('%s_KhiVsJabVsIe',dir) ; 
 fig = figure('Name',figtitle,'NumberTitle','off') ; hold on ; 
 
 imagesc([20*v_Jab(1) 20*v_Jab(end)],[20*v_Ia(1) 20*v_Ia(end)],NormKhi)
-%imagesc([0 30],[.4 2],NormKhi)
 xlabel('J_{EE} (\mu A.ms.cm^-2)')
 ylabel('J_{E0} (\mu A.ms.cm^-2)') 
 h = colorbar ;

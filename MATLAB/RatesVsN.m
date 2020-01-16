@@ -1,19 +1,13 @@
 clear all ; 
 GlobalVars 
 
-Iext = ExternalInput(model,nbpop,dir) ; 
-
-%function RatesVsN(model,nbpop,dir,Iext,K,file,n,g,IF_Nk,IF_RING,Crec,Cff,IF_IEXT,nPrtr,IF_SAVE)
-
 IF_IEXT = '' ; 
 l_N = [4] ; 
 l_K = [500 1000 2000] ; 
 IDX=5 ;
-% CheckArgs(nargin) ;
 
 cl = {[1 0 0] [0 0 1] [0 1 0]  [0.7 0.7 0.7]} ;
 mk = {'x' 'o' '*' '.' 'x'} ;
-
 
 IF_DATA = 1 ;
 nbPoints = 0 ;
@@ -26,7 +20,7 @@ if(IF_DATA)
 
         for j=1:length(l_K)            
 
-            data = ImportData(model,nbpop,dir,'IdvRates',l_N(i),l_K(j),g,IF_RING,Crec,Cff,IF_IEXT,prtrPop,Iprtr) ;
+            data = ImportData(model,nbpop,dir,'IdvRates',l_N(i),l_K(j),g,IF_IEXT,prtrPop,Iprtr) ;
             
             if(~isempty(data))
                 nbPoints = nbPoints + 1 ;
@@ -89,13 +83,6 @@ if(nbPoints>1)
     for i=1:nbpop 
         
         NumRatesK = FiniteRates(i,:) ;
-        % plot(l_K , ones(1,length(l_K)) .* NumRatesK ,'o' ,'color', cl{i}, 'markerSize', 5)
-        % plot(1./sqrt(l_K) , ones(1,length(l_K)) .* NumRatesK - MFRates(i) ,'o' ,'color', cl{i}, 'markerSize', 5)
-        % plot(l_K , ones(1,length(l_K)) .* MFRates(i) , 'color', cl{i}, 'markerSize', 5,'linestyle','--')
-        % plot(1./sqrt(l_K) , ones(1,length(l_K)) .* MFRates(i) , 'color', cl{i}, 'markerSize', 5,'linestyle','--')
-
-        % plot(sqrt(l_K) , ones(1,length(l_K)) .* NumRatesK ,'d' ,'color', cl{i}, 'markerSize', 5)
-        % plot(sqrt(l_K) , ones(1,length(l_K)) .* MFRates(i) , 'color', cl{i}, 'markerSize', 5,'linestyle','--')
         
     end
     
